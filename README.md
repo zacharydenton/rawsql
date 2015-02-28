@@ -118,6 +118,54 @@ drop_person_table(*args, **kwargs)
     DROP TABLE person;
 ```
 
+## Comparison
+
+<table>
+<thead>
+<tr>
+<td>`rawsql`</td>
+<td>`sqlalchemy`</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+```sql
+-- name: most_common_titles
+-- uses postgres json type.
+select data->>'title' as title, count(*)
+from movies where data->>'year' = ?
+group by title
+order by count(*) desc
+```
+
+```pycon
+>>> next(most_common_titles(2008))
+("Journey to the Center of the Earth", 3)
+```
+</td>
+<td>
+```python
+# the "easy" way. inefficient.
+import collections
+counter = collections.Counter()
+for movie in session.query(Movie):
+    if movie.data.get('year') == 2008:
+        counter[movie.data['title']] += 1
+counter.most_common(1)[0]
+
+# the "right" way. better read docs.sqlalchemy.org.
+from sqlalchemy import func, types
+session.query(Movie.data['title'].cast(types.String), func.count()).\
+    filter(Movie.data['year'].cast(types.String) == "2008").\
+    group_by(Movie.data['title'].cast(types.String)).\
+    order_by(func.count().desc())[0]
+```
+</td>
+</tr>
+</tbody>
+</table>
+
 ## Thanks
 
 This project is inspired by [krisajenkins/yesql](https://github.com/krisajenkins/yesql). Check it out if you need something like this for Clojure!
