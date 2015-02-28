@@ -120,16 +120,8 @@ drop_person_table(*args, **kwargs)
 
 ## Comparison
 
-<table>
-<thead>
-<tr>
-<td>`rawsql`</td>
-<td>`sqlalchemy`</td>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
+### `rawsql`
+
 ```sql
 -- name: most_common_titles
 -- uses postgres json type.
@@ -143,8 +135,9 @@ order by count(*) desc
 >>> next(most_common_titles(2008))
 ("Journey to the Center of the Earth", 3)
 ```
-</td>
-<td>
+
+### `sqlalchemy`
+
 ```python
 # the "easy" way. inefficient.
 import collections
@@ -161,10 +154,6 @@ session.query(Movie.data['title'].cast(types.String), func.count()).\
     group_by(Movie.data['title'].cast(types.String)).\
     order_by(func.count().desc())[0]
 ```
-</td>
-</tr>
-</tbody>
-</table>
 
 ## Thanks
 
