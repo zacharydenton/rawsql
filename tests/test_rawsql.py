@@ -41,6 +41,7 @@ class TestRawsql(unittest.TestCase):
         fetch_by_id = rawsql.query(relative('sql/fetch_by_id.sql'))
         self.assertEqual(fetch_by_id.__name__, "fetch_by_id")
 
+    @unittest.skipIf(not getattr(sqlite3, 'complete_statement', None), "complete_statement() not available")
     def test_sql(self):
         fetch_by_id = rawsql.query(relative('sql/fetch_by_id.sql'))
         self.assertTrue(sqlite3.complete_statement(fetch_by_id.sql))
@@ -64,9 +65,9 @@ class TestRawsql(unittest.TestCase):
         ]
         self.assertEqual(len(queries.keys()), len(expected))
         self.assertEqual(queries['drop_person_table'].sql, 'DROP TABLE person;')
-        self.assertTrue(sqlite3.complete_statement(queries['update_age'].sql))
         self.assertTrue(queries['drop_person_table'].__doc__.startswith('completely destroys the person table!'))
 
+    @unittest.skipIf(not getattr(sqlite3, 'complete_statement', None), "complete_statement() not available")
     def test_no_name(self):
         titles_for_year = rawsql.query(relative('sql/titles_for_year.sql'))
         self.assertTrue(sqlite3.complete_statement(titles_for_year.sql))
