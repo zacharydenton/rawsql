@@ -108,7 +108,7 @@ If your query names are valid Python identifiers, you may wish to convert the di
 
 ```pycon
 >>> import collections
->>> queries = collections.namedtuple('Queries', queries.keys())
+>>> queries = collections.namedtuple('Queries', queries.keys())(**queries)
 >>> help(queries.drop_person_table)
 Help on function drop_person_table in module rawsql.core:
 
