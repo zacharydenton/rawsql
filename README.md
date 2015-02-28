@@ -126,7 +126,7 @@ drop_person_table(*args, **kwargs)
 -- name: most_common_titles
 -- uses postgres json type.
 select data->>'title' as title, count(*)
-from movies where data->>'year' = ?
+from movies where data->>'year' = %(year)s
 group by title
 order by count(*) desc
 ```
