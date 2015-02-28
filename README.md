@@ -5,7 +5,7 @@ rawsql is a Python library that makes it easy to use plain SQL in your projects.
 ## Installation
 
 ```shell
-$ pip install rawsql
+$ pip install git+git://github.com/zacharydenton/rawsql
 ```
 
 ## Usage
