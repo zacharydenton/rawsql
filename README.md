@@ -120,4 +120,4 @@ drop_person_table(*args, **kwargs)
 
 ## TODO
 
-- [ ] Return functions with signatures based on the SQL parameters, not just (*args, **kwargs).
+- [ ] Return functions with signatures based on the SQL parameters, not just (\*args, \*\*kwargs).
