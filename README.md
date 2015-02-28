@@ -118,6 +118,10 @@ drop_person_table(*args, **kwargs)
     DROP TABLE person;
 ```
 
+## Thanks
+
+This project is inspired by [krisajenkins/yesql](https://github.com/krisajenkins/yesql). Check it out if you need something like this for Clojure!
+
 ## TODO
 
 - [ ] Return functions with signatures based on the SQL parameters, not just (\*args, \*\*kwargs).
